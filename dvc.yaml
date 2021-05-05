@@ -1,0 +1,14 @@
+stages:
+  download_file:
+    cmd: az storage copy -d remote.csv --account-name dataversioningdemo --source-container
+      dataversioningdemo --source-blob remote_data/remote.csv
+    deps:
+    - azure://dataversioningdemo/remote_data/remote.csv
+    outs:
+    - remote.csv
+  clean:
+    cmd: python3 clean.py
+    deps:
+    - remote.csv
+    outs:
+    - dataset.csv

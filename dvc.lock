@@ -1,0 +1,23 @@
+schema: '2.0'
+stages:
+  clean:
+    cmd: python3 clean.py
+    deps:
+    - path: remote.csv
+      md5: 80ccab65fb115cbad143dbbd2bcd5577
+      size: 460676
+    outs:
+    - path: dataset.csv
+      md5: b5d7e391c62437eafe26cf38ec471aa0
+      size: 469260
+  download_file:
+    cmd: az storage copy -d remote.csv --account-name dataversioningdemo --source-container
+      dataversioningdemo --source-blob remote_data/remote.csv
+    deps:
+    - path: azure://dataversioningdemo/remote_data/remote.csv
+      etag: '0x8D90ED099C72B14'
+      size: 460676
+    outs:
+    - path: remote.csv
+      md5: 80ccab65fb115cbad143dbbd2bcd5577
+      size: 460676
